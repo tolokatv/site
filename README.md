@@ -1,4 +1,4 @@
 # site
 Site for TolokaTV
-git
+git lenovo
 
