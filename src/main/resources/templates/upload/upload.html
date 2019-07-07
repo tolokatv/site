@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Title -->
+<title>Toloka Studio. Профайл пользователя</title>
+
+<!-- Favicon -->
+<link rel="icon" href="img/core-img/favicon.ico">
+
+<!-- Core Stylesheet -->
+<link rel="stylesheet" href="style.css">
+<body>
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+    <!-- Top Header Area -->
+    <th:block th:include="/static/header_area"></th:block>
+    <!-- Navbar Area -->
+    <th:block th:include="/static/navbar_area"></th:block>
+</header>
+<!-- ##### Header Area End ##### -->
+<!--<h3>Завантеження файлу</h3>-->
+
+<!--<form method="POST" action="/upload" enctype="multipart/form-data">-->
+    <!--<input type="file" name="file" /><br/><br/>-->
+    <!--<input type="submit" value="Submit" />-->
+<!--</form>-->
+
+
+<div class="contact-area section-padding-0-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-title">
+                    <h1>Реальне Оболонське Телебачення</h1>
+                    <h2>Завантеження відео</h2>
+                    <br/><span th:utext="${message}"></span><br/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <div class="contact-form-area">
+                    <form action="#" th:action="@{/upload}" th:object="${upload}" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="text" name="subject" id="subject" th:value="${subject}" class="form-control" placeholder="Тема">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="item" id="item" th:value="${item}" class="form-control" cols="30" rows="10" placeholder="Короткий опис"></textarea>
+                            </div>
+                            <div class="col-12 col-lg-12">
+                                <input type="file" id="file" name="file" th:value="${file}" class="btn newspaper-btn mt-30 w-100">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn newspaper-btn mt-30 w-100" type="submit">Надіслати</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--<div class="col-12 col-lg-4">-->
+                <!--&lt;!&ndash; Single Contact Information &ndash;&gt;-->
+                <!--<div class="single-contact-information">-->
+                    <!--<h6>Адреса:</h6>-->
+                    <!--<p>ГО Полярна 8-А<br>Київ<br>Україна<br>04201</p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Single Contact Information &ndash;&gt;-->
+                <!--<div class="single-contact-information">-->
+                    <!--<h6>Телефон:</h6>-->
+                    <!--<p>+380(67)2437595 <br> +380(50)-4100047</p>-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Single Contact Information &ndash;&gt;-->
+                <!--<div class="single-contact-information">-->
+                    <!--<h6>Email:</h6>-->
+                    <!--<p>info@toloka.kiev.ua</p>-->
+                <!--</div>-->
+                <!--<div class="single-contact-information">-->
+                    <!--<h6>Сайт:</h6>-->
+                    <!--<p><a href="http://toloka.kiev.ua">http://toloka.kiev.ua</a></p>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<!-- ##### Contact Form Area End ##### -->
+
+
+
+<!-- ##### Footer Area Start ##### -->
+<th:block th:include="/static/footer_area"></th:block>
+<!-- ##### Footer Area Start ##### -->
+
+<!-- ##### All Javascript Files ##### -->
+<th:block th:include="/static/body_javascripts"></th:block>
+<!-- ##### All Javascript Files ##### -->
+</body>
+</html>

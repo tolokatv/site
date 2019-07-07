@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="User account registration" />
+    <meta name="author" content="Amir Boroumand" />
+    <link rel="icon" href="favicon.ico" />
+
+    <title>Реєстрація нового користувача</title>
+
+    <!-- Bootstrap core CSS -->
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/ckeditor_4.11.3.1.ckeditor_4.11.3.1.7/css/bootstrap.min.css"-->
+          <!--rel="stylesheet"-->
+          <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"-->
+          <!--crossorigin="anonymous" />-->
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="gray-bg">
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+
+    <!-- Top Header Area -->
+    <!-- Top Header Area -->
+    <th:block th:include="/static/header_area"></th:block>
+    <!-- Navbar Area -->
+    <th:block th:include="/static/navbar_area"></th:block>
+</header>
+<!-- ##### Header Area End ##### -->
+
+<!-- ##### Hero Area Start ##### -->
+<div class="hero-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-8">
+                <!-- Breaking News Widget -->
+                <th:block th:include="/static/hot_news"></th:block>
+                <!-- Breaking News Widget -->
+                <th:block th:include="/static/kyiv_news"></th:block>
+            </div>
+
+            <!-- Hero banner Add -->
+            <!-- Hero Add -->
+            <div class="col-12 col-lg-4">
+                <div class="hero-add">
+                    <a href="#"><img src="img/bg-img/hero-add.gif" alt=""></a>
+                </div>
+            </div>
+            <!-- Hero Add -->
+        </div>
+    </div>
+</div>
+<!-- ##### Hero Area End ##### -->
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+
+        <h4>Реєстрація нового користувача Порталу "Студія Толока"</h4>
+
+        <!--autocomplete="off" -->
+        <form action="#"
+              th:action="@{/register}"
+              th:object="${user}"
+              method="post"
+              class="m-t"
+              role="form"
+              data-toggle="validator"
+        >
+
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>
+
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+            <div th:if="${confirmationMessage}" class="alert alert-success" role="alert" th:text=${confirmationMessage}></div>
+            <div th:if="${alreadyRegisteredMessage}" class="alert alert-danger" role="alert" th:text="${alreadyRegisteredMessage}"></div>
+
+            <div th:if="${#fields.hasErrors('usermail')}" th:errors="*{usermail}" class="validation-message alert alert-danger" role="alert"><p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p> </div>
+            <div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message alert alert-danger" role="alert"><p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p></div>
+            <div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message alert alert-danger" role="alert"><p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p></div>
+
+            <div class="form-group input-group has-feedback">
+                <span class="input-group-addon"> <span class="glyphicon glyphicon-envelope"></span> </span>
+                <input type="email" th:field="*{usermail}" placeholder="Поштова адреса" class="form-control" data-error="Ця поштова адреса не коректна." required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+
+            <div class="form-group input-group has-feedback">
+                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message"></label>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+
+                <input type="text" th:field="*{firstName}" placeholder="Імʼя" class="form-control" required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+
+            <div class="form-group input-group has-feedback">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                </span>
+                <input type="text" th:field="*{lastName}" placeholder="Призвище" class="form-control" required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary block full-width m-b">Зареєструвати</button>
+
+        </form>
+
+    </div>
+</div>
+<p>
+
+</p>
+
+<!-- ##### Footer Area Start ##### -->
+<th:block th:include="/static/footer_area"></th:block>
+<!-- ##### Footer Area Start ##### -->
+
+<!-- ##### All Javascript Files ##### -->
+<th:block th:include="/static/body_javascripts"></th:block>
+<!-- ##### All Javascript Files ##### -->
+
+
+
+<!-- jQuery-->
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>-->
+
+<!-- Bootstrap -->
+<!--<script-->
+        <!--src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"-->
+        <!--integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"-->
+        <!--crossorigin="anonymous"></script>-->
+
+<!-- Bootstrap Validator plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+
+
+</body>
+
+</html>

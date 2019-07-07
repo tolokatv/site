@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <title id='Description'>Список постів</title>
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/core-img/favicon.ico">
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+<body>
+    <!-- ##### Header Area Start ##### -->
+    <header class="header-area">
+        <!--&lt;!&ndash; Top Header Area &ndash;&gt;-->
+        <th:block th:include="/static/header_area"></th:block>
+        <!--&lt;!&ndash; Navbar Area &ndash;&gt;-->
+        <th:block th:include="/static/navbar_area"></th:block>
+    </header>
+    <!-- ##### Header Area End ##### -->
+
+
+<!-- ##### Hero Area Start ##### -->
+<div class="hero-area">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-lg-8">
+                <!-- Breaking News Widget -->
+                <th:block th:include="/static/hot_news"></th:block>
+                <!-- Breaking News Widget -->
+                <th:block th:include="/static/kyiv_news"></th:block>
+            </div>
+
+            <!-- Hero banner Add -->
+            <!-- Hero Add -->
+            <div class="col-12 col-lg-4">
+                <div class="hero-add">
+                    <a href="#"><img src="/img/bg-img/hero-add.gif" alt=""></a>
+                </div>
+            </div>
+            <!-- Hero Add -->
+        </div>
+    </div>
+</div>
+<!-- ##### Hero Area End ##### -->
+
+    <!-- Таблиця для постів -->
+    <div class="container">
+        <!--<h1>Edit Profile</h1>-->
+        <hr>
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <!--<form action="#" th:action="@{/user/create/item/{itt}(itt=${itemtype})}" th:object="${items}" method="post">-->
+                <form action="#" th:action="@{/user/create/item/ROT}" th:object="${items}" method="post">
+                    <table id="customerTable" class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Заголовок</th>
+                            <th>Старт</th>
+                            <th>Кінець</th>
+                            <th>Головна</th>
+                            <th>Статус</th>
+                            <th>Категорія</th>
+                            <th>Тип</th>
+                            <th>Редагувати</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="item, rowStat: ${items}"
+                            th:style="${rowStat.odd} ? 'color: gray' : 'color: blue;'">
+                            <td th:text="${item.id}"></td>
+                            <td th:text="${item.title}"></td>
+                            <td th:text="${item.startdate}"></td>
+                            <td th:text="${item.enddate}"></td>
+                            <td th:text="${item.top} ? 'ТАК' : 'Ні' "></td>
+                            <td th:text="${item.status.name}"></td>
+                            <td th:text="${item.category.name}"></td>
+                            <td th:text="${item.typerecord.name}"></td>
+                            <td> <a th:href="@{/user/item/{itemId}/{it}(itemId=${item.id}, it=${item.typerecord.name})}">редагувати</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div>
+                        <div>Створити статтю</div>
+                        <!-- Тут потрібно обрати тип запису. -->
+                        <button type="submit">Створити статтю</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Таблиця для постів -->
+
+
+
+<!-- ##### Footer Area Start ##### -->
+<th:block th:include="/static/footer_area"></th:block>
+<!-- ##### Footer Area Start ##### -->
+
+<!-- ##### All Javascript Files ##### -->
+<th:block th:include="/static/body_javascripts"></th:block>
+<!-- ##### All Javascript Files ##### -->
+
+
+
+
+</body>
+</html>

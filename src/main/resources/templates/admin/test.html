@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="uk">
+<head>
+    <title id='Description'>The jqxTree displays a hierarchical collection of items. You
+        can populate it from 'UL' or by using its 'source' property.</title>
+    <script type="text/javascript" src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" href="/jqw/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" href="/jqw/styles/jqx.summer.css" type="text/css" />
+</head>
+<body class='default'>
+<header class="header-area">
+    <!-- Top Header Area -->
+    <!--<th:block th:include="/static/header_area"></th:block>-->
+    <!-- Navbar Area -->
+    <!--<th:block th:include="/static/navbar_area"></th:block>-->
+</header>
+<div id='jqxTree'> </div>
+    <div>
+        <h3>Перенос категории</h3>
+        <p id="textwhat"></p>
+        <input type="button" value="Что переносим" id='jqxbwhat' /> <!--что переносим -->
+        <p id="textwhere"></p><br>
+        <input type="button" value="Куда переносим" id='jqxbwhere' /> <!--что переносим -->
+        <input type="button" value="Перенести Категорию" id='jqxbmove' />
+        <input type="button" value="Очистити" id='jqxbclear' />
+    </div>
+<div>
+    <h3>Изменение категории</h3>
+</div>
+<div>
+    <input type="text" id="aed"/>
+</div>
+<div>
+    <input type="button" value="Создать Категорию" id='jqxbcreate' />
+    <input type="button" value="Изменить Категорию" id='jqxbchange' />
+    <input type="button" value="Удалить Категорию" id='jqxbdelete' />
+</div>
+<!-- ##### Footer Area Start ##### -->
+<!--<th:block th:include="/static/footer_area"></th:block>-->
+<!-- ##### Footer Area Start ##### -->
+<!-- ##### All Javascript Files ##### -->
+<!--<th:block th:include="/static/body_javascripts"></th:block>-->
+<!-- ##### All Javascript Files ##### -->
+<!--<script type="text/javascript" src="/js/jquery/jquery-1.11.1.min.js"></script>-->
+<script type="text/javascript" src="/jqw/jqxcore.js"></script>
+<script type="text/javascript" src="/jqw/jqxbuttons.js"></script>
+<script type="text/javascript" src="/jqw/jqxscrollbar.js"></script>
+<script type="text/javascript" src="/jqw/jqxpanel.js"></script>
+<script type="text/javascript" src="/jqw/jqxtree.js"></script>
+<script type="text/javascript" src="/jqw/jqxinput.js"></script>
+<script type="text/javascript">
+        var item;
+        var whatitem;
+        var whereitem;
+
+        // body - json который мы отправляем на сервер
+        // action - действие соторое мы выполняем create, edit, delete, move
+        // create, edit, delete - один аргумент
+        // move - переносим елемент firstid под secondid
+        // firstid - id первого елемента
+        // value - строковое значение. Используется при переименовании и добавлении категории
+        // secondid - id второго елемента
+        var body = {
+            action:"",
+            firstid:"",
+            value:"",
+            secondid:""};
+
+        function getcategorys() {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "GET", "http://127.0.0.1:8080/api/category", false );
+            xmlHttp.send( null );
+            return JSON.parse(xmlHttp.responseText);
+        } ;
+        $(document).ready(function () {
+            var source = getcategorys();
+            // Create jqxTree.
+            $('#jqxTree').jqxTree({ source: source });
+            $('#jqxbcreate').jqxButton({ width: '150', height: '25'});
+            $('#jqxbchange').jqxButton({ width: '150', height: '25'});
+            $('#jqxbdelete').jqxButton({ width: '150', height: '25'});
+            $('#jqxbmove').jqxButton({ width: '150', height: '25'});
+            $('#jqxbclear').jqxButton({ width: '150', height: '25'});
+            $('#jqxbwhat').jqxButton({ width: '150', height: '25'});
+            $('#jqxbwhere').jqxButton({ width: '150', height: '25'});
+            $("#aed").jqxInput({ placeHolder: "Категория"});
+        });
+
+    </script>
+<script type="text/javascript">
+             $("#jqxbwhat").on('click', function () {
+                 whatitem = item;
+                 document.getElementById("textwhat").innerHTML = whatitem.label;
+                 console.log("Кнопка Что: " + whatitem.label + " ID= " + whatitem.id);
+             });
+        </script>
+<script type="text/javascript">
+             $("#jqxbwhere").on('click', function () {
+                 whereitem = item;
+                 document.getElementById("textwhere").innerHTML = whereitem.label;
+                 console.log("Кнопка Куда: " + whereitem.label + " ID= " + whereitem.id);
+             });
+        </script>
+<script type="text/javascript">
+             $("#jqxbmove").on('click', function () {
+                 //console.log("Что ID= "  + whatitem.id + " Куда ID= " + whereitem.id);
+                if(typeof item != "undefined" && item)
+                {
+                    body = {
+                    action:"",
+                    firstid:"",
+                    value:"",
+                    secondid:""};
+                    if(typeof whatitem != "undefined" && whatitem){
+                        body.action = "move";
+                        body.firstid = whatitem.id;
+                        body.value = "";
+                    }
+                    if(typeof whereitem != "undefined" && whereitem){
+                        body.secondid = whereitem.id;
+                    }
+                    console.log("Rest body : " );
+                    console.log(body);
+
+                    // отправляем запрос на сервер.
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = "http://127.0.0.1:8080/api/admin/category/move";
+
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            source = getcategorys();
+                            $('#jqxTree').jqxTree({ source: source });
+                        }
+                    };
+                    xmlhttp.open("POST", url, true);
+                    xmlhttp.send(JSON.stringify(body));
+
+                }
+
+
+             });
+        </script>
+<script type="text/javascript">
+             $("#jqxbclear").on('click', function () {
+                 document.getElementById("textwhat").innerHTML = "";
+                 document.getElementById("textwhere").innerHTML = "";
+                 if(typeof whatitem != "undefined" && whatitem){whereitem.id = "";};
+                 if(typeof whereitem != "undefined" && whereitem){whereitem.id = "";};
+                 body = {
+                 action:"",
+                 firstid:"",
+                 value:"",
+                 secondid:""};
+             });
+        </script>
+<script type="text/javascript">
+        $("#jqxbcreate").on('click', function () {
+             console.log("Selected Create: " + $('#aed').val() );
+             body.action = "Create";
+             body.firstid = "";
+             body.value = $('#aed').val();
+             body.secondid = "";
+             console.log("Rest body : " );
+             console.log(body);
+
+             // отправляем запрос на сервер.
+             var xmlhttp = new XMLHttpRequest();
+             var url = "http://127.0.0.1:8080/api/admin/category";
+
+             xmlhttp.onreadystatechange = function() {
+                     console.log("CallBack ext " );
+                 if (this.readyState == 4 && this.status == 200) {
+                     console.log("CallBack int " );
+                     source = getcategorys();
+                     $('#jqxTree').jqxTree({ source: source });
+                 }
+             };
+             xmlhttp.open("POST", url+body.firstid, true);
+             xmlhttp.send(JSON.stringify(body));
+        });
+    </script>
+<script type="text/javascript">
+        $("#jqxbchange").on('click', function () {
+            if(typeof item != "undefined" && item)
+                {
+                    console.log("Selected : " + $('#aed').val() );
+                    body.action = "change";
+                    body.firstid = item.id;
+                    body.value = $('#aed').val();
+                    body.secondid = "";
+                    console.log("Rest body : " );
+                    console.log(body);
+
+                    // отправляем запрос на сервер.
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = "http://127.0.0.1:8080/api/admin/category";
+
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            source = getcategorys();
+                            $('#jqxTree').jqxTree({ source: source });
+                        }
+                    };
+                    xmlhttp.open("PUT", url, true);
+                    xmlhttp.send(JSON.stringify(body));
+
+                }
+        });
+    </script>
+<script type="text/javascript">
+        $("#jqxbdelete").on('click', function () {
+            if(typeof item != "undefined" && item)
+                {
+                    console.log("Selected : " + $('#aed').val() );
+                    body.action = "delete";
+                    body.firstid = item.id;
+                    body.value = $('#aed').val();
+                    body.secondid = "";
+                    console.log("Rest body : " );
+                    console.log(body);
+
+                    // отправляем запрос на сервер.
+                    var xmlhttp = new XMLHttpRequest();
+                    var url = "http://127.0.0.1:8080/api/admin/category/";
+
+                    xmlhttp.onreadystatechange = function() {
+                            console.log("CallBack ext " );
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log("CallBack int " );
+                            source = getcategorys();
+                            $('#jqxTree').jqxTree({ source: source });
+                        }
+                    };
+                    xmlhttp.open("DELETE", url+body.firstid, true);
+                    xmlhttp.send(JSON.stringify(body));
+
+                }
+        });
+    </script>
+<script type="text/javascript">
+        $('#jqxTree').on('select', function (event) {
+            var args = event.args;
+            item = $('#jqxTree').jqxTree('getItem', args.element);
+            console.log("select id=" + item.id + " Label=" + item.label );
+            $('#aed').val(item.label);
+        });
+
+    </script>
+
+</body>
+</html>

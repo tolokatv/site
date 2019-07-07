@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>Toloka Studio. Профайл пользователя</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/core-img/favicon.ico">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+    <!-- Top Header Area -->
+    <th:block th:include="/static/header_area"></th:block>
+    <!-- Navbar Area -->
+    <th:block th:include="/static/navbar_area"></th:block>
+</header>
+<!-- ##### Header Area End ##### -->
+
+<!-- ##### Contact Form Area Start ##### -->
+<div class="contact-area section-padding-0-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-title">
+                    <h1>Профайл користувача.</h1>
+                    <!--<br/><span th:utext="${message}"></span><br/>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!--<h1>Edit Profile</h1>-->
+            <hr>
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <hr>
+                    <div class="row">
+                        <!-- left column -->
+                        <div th:if="${user}" class="col-md-3">
+                            <div class="text-center">
+                                <form class="form-horizontal" role="form" enctype="multipart/form-data" action="#" th:action="@{/user/edit/avatar/{userId}(userId=${user.id})}" th:object="${user}" method="post">
+                                    <div th:if="${avatar}">
+<!--                                        <div>AVATAR</div>-->
+<!--                                        <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">-->
+                                        <img th:src="@{/worker/user/{userId}/avatar.png(userId=${user.id})}" class="avatar img-circle" alt="avatar">
+                                    </div>
+                                    <h6>Завантажити аватар</h6>
+                                    <input type="file" id="file" name="file" class="form-control">
+                                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                                    <span></span>
+                                    <input type="reset" class="btn btn-default" value="Очистити">
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- edit form column -->
+                        <div class="col-md-9 personal-info">
+                            <div th:if="${errorMessage}" class="alert alert-info alert-dismissable">
+                                <a class="panel-close close" data-dismiss="alert">×</a>
+                                <i class="fa fa-coffee"></i>
+                                <span  th:text="${errorMessage}"></span>
+                            </div>
+                            <div th:if="${user}">
+                                <h2>Персональні данні</h2>
+                                <form class="form-horizontal" role="form" action="#" th:action="@{/user/edit/{userId}(userId=${user.id})}" th:object="${user}" method="post">
+                                    <div class="form-group">
+                                        <label class="col-4 col-lg-4 control-label">Елекронна пошта:</label>
+                                        <div class="col-8 col-lg-8">
+                                            <input class="form-control" type="text" th:field="*{usermail}" th:value="*{usermail}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Імʼя:</label>
+                                        <div class="col-lg-8">
+                                            <input class="form-control" type="text" th:field="*{firstName}" th:value="*{firstName}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Призвище:</label>
+                                        <div class="col-lg-8">
+                                            <input class="form-control" type="text" th:field="*{lastName}" th:value="*{lastName}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Телефон:</label>
+                                        <div class="col-lg-8">
+                                            <input class="form-control" type="tel" th:field="*{phone}" th:value="*{phone}">
+                                                   <!--pattern="[\+]\d{ckeditor_4.11.3.1}[\(]\d{2}[\)]\d{ckeditor_4.11.3.1}[\-]\d{4}">-->
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-3 control-label">Поточні ролі:</label>
+                                        <div class="col-lg-8">
+                                            <br th:each="i : ${user.roles}"
+                                                th:text="${i.name}" />
+                                            <!--th:value="${i.id}"-->                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label"></label>
+                                        <div class="col-md-8">
+                                            <button type="submit" class="btn btn-primary">Зберегти</button>
+                                            <span></span>
+                                            <input type="reset" class="btn btn-default" value="Очистити">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--</div>-->
+                    <hr>
+                    <!--</form>-->
+                </div>
+
+                <div class="col-12 col-lg-8">
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    Ще одна колонка?
+                    <div th:if="${admin}">
+                        А це простір для адміністраторів
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Google Maps -->
+        <!--<div class="map-area">-->
+        <!--<div id="googleMap"></div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+<!-- ##### Contact Form Area End ##### -->
+
+
+<!-- ##### Footer Area Start ##### -->
+<th:block th:include="/static/footer_area"></th:block>
+<!-- ##### Footer Area Start ##### -->
+
+<!-- ##### All Javascript Files ##### -->
+<th:block th:include="/static/body_javascripts"></th:block>
+<!-- ##### All Javascript Files ##### -->
+
+</body>
+
+</html>

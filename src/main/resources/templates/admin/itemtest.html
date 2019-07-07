@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>jQuery ComboBox</title>
+    <!--<th:block th:include="/static/body_javascripts"></th:block>-->
+    <link rel="stylesheet" href="/jqw/styles/jqx.base.css" type="text/css" />
+    <!--<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>-->
+    <script type="text/javascript" src="/js/jquery/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/jqw/jqxcore.js"></script>
+    <script type="text/javascript" src="/jqw/jqxbuttons.js"></script>
+    <script type="text/javascript" src="/jqw/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="/jqw/jqxlistbox.js"></script>
+    <script type="text/javascript" src="/jqw/jqxcombobox.js"></script>
+</head>
+<body>
+<div id='content'>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                var source = [
+                    "Affogato",
+                    "Americano",
+                    "Bicerin",
+                    "Breve",
+                    "Café Bombón",
+                    "Café au lait",
+                    "Caffé Corretto",
+                    "Café Crema",
+                    "Caffé Latte",
+		        ];
+                // Create a jqxComboBox
+                $("#jqxcombobox").jqxComboBox({ source: source, selectedIndex: 0, width: '200px', height: '25px' });
+                // disable the sixth item.
+                $("#jqxcombobox").jqxComboBox('disableAt', 5);
+                // bind to 'select' event.
+                $('#jqxcombobox').bind('select', function (event) {
+                    var args = event.args;
+                    var item = $('#jqxcombobox').jqxComboBox('getItem', args.index);
+                    console.log('Selected: ' + item.label);
+                });
+            });
+        </script>
+    <div id='jqxcombobox'>
+    </div>
+</div>
+
+</body>
+</html>

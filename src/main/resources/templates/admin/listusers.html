@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>The News Paper - News &amp; Lifestyle Magazine Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/img/core-img/favicon.ico">
+
+    <!-- Core Stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+<!-- ##### Header Area Start ##### -->
+<header class="header-area">
+    <!-- Top Header Area -->
+    <th:block th:include="/static/header_area"></th:block>
+    <!-- Navbar Area -->
+    <th:block th:include="/static/navbar_area"></th:block>
+</header>
+<!-- ##### Header Area End ##### -->
+
+<!-- ##### Contact Form Area Start ##### -->
+<div class="contact-area section-padding-0-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-title">
+                    <h1>Адміністрування користувачів.</h1>
+                    <!--<br/><span th:utext="${message}"></span><br/>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!--<h1>Edit Profile</h1>-->
+            <hr>
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <form action="#" th:action="@{/admin/users}" th:object="${users}" method="post">
+                        <table id="customerTable" class="table">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Пошта</th>
+                                <th>Імʼя</th>
+                                <th>Призвище</th>
+                                <th>Роль</th>
+                                <th>Активний</th>
+                                <th>Редагувати</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="customer, rowStat: ${users}"
+                                th:style="${rowStat.odd} ? 'color: gray' : 'color: blue;'">
+                                <td th:text="${customer.id}"></td>
+                                <td th:text="${customer.usermail}"></td>
+                                <td th:text="${customer.firstName}"></td>
+                                <td th:text="${customer.lastName}"></td>
+                                <td>
+                                    <br th:each="i : ${customer.roles}" th:text="${i.name}">
+                                    <!--<select>-->
+                                        <!--<option th:each="i : ${customer.roles}"-->
+                                                <!--th:value="${i.id}"-->
+                                                <!--th:text="${i.name}" />-->
+                                    <!--</select>-->
+                                </td>
+                                <td th:text="${customer.enabled} ? 'ТАК' : 'Ні' "></td>
+                                <td> <a th:href="@{/user/edit/{userId}(userId=${customer.id})}">редагувати</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </div>
+
+                <div class="col-12 col-lg-8">
+                </div>
+
+                <div class="col-12 col-lg-4">
+                </div>
+            </div>
+         </div>
+
+
+        <!-- Google Maps -->
+        <!--<div class="map-area">-->
+            <!--<div id="googleMap"></div>-->
+        <!--</div>-->
+
+    </div>
+</div>
+<!-- ##### Contact Form Area End ##### -->
+
+
+<!-- ##### Footer Area Start ##### -->
+<th:block th:include="/static/footer_area"></th:block>
+<!-- ##### Footer Area Start ##### -->
+
+<!-- ##### All Javascript Files ##### -->
+<th:block th:include="/static/body_javascripts"></th:block>
+<!-- ##### All Javascript Files ##### -->
+
+</body>
+
+</html>
