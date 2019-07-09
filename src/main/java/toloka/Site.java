@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableAutoConfiguration
 @SpringBootApplication
-public class SiteApplication {
+public class Site {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SiteApplication.class, args);
+		SpringApplication.run(Site.class, args);
 	}
 }
