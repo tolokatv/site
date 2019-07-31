@@ -1,7 +1,7 @@
 # Folders
 .idea/*
 out/*
-src/main/resources/static/framework/*
+# src/main/resources/static/framework/*
 build/*
 .gradle/*
 

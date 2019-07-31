@@ -1,0 +1,26 @@
+html {
+    font-size: 14px;
+  }
+
+.hero-area {
+    text-align: left;
+    padding-top: 2rem;
+    font-size: 18pt; 
+    color:          gray;
+  }
+
+.hero-name {
+    border-bottom:  1rem solid red;
+    border-left:    1.5rem solid red;
+    padding-left: 1rem
+}
+
+.hero-text {
+    color: blue;
+}
+
+.block-name {
+  border-bottom:  1rem solid red;
+  border-left:    1.5rem solid red;
+  padding-left: 1rem
+}

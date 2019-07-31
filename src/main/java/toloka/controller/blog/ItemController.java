@@ -16,6 +16,7 @@ import toloka.model.blog.*;
 import toloka.model.front.FrontContacts;
 import toloka.model.security.SiteUser;
 import toloka.service.*;
+import toloka.utils.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +25,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+
+import static toloka.utils.service.check_user_privelidge;
 
 
 @Controller
@@ -392,15 +395,21 @@ public class ItemController {
 
 
         // створюємо нову запис посту
-        item = new Item();
+//        item = new Item();
         // поточний користувач
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             username = ((UserDetails)principal).getUsername();
             user = userService.findByEmail(username);
 
+            // тестуємо виклик сервісної функції
+            if (check_user_privelidge('W',"ROT",user)) {
+                System.out.println("========== test check_user_privelidge ===========");
+            }
+            //
+
             if (user != null ) {
-                item.setAuthor(user);
+//                item.setAuthor(user);
                 modelAndView.addObject("items", itemservice.GetByAutor(user));
             } else {
                 //TODO
